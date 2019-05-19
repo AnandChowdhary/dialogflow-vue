@@ -6,7 +6,13 @@
         v-for="(message, index) in messages"
         :key="`message_${message.id}_${index}`"
       >
-        <span class="message-text">{{ message.text }}</span>
+        <span
+          class="message-text"
+          :style="
+            message.from === 'user' ? `color: #fff; background: ${color}` : ''
+          "
+          >{{ message.text }}</span
+        >
       </li>
       <li class="message message--from-ai" v-if="loading">
         <span class="message-text">Typing...</span>
@@ -34,6 +40,7 @@ export default class DialogflowVue extends Vue {
   @Prop({ default: "ee13e89f-05ab-4cda-9f09-4204311c3d80" }) "apiKey": string;
   @Prop({ default: "https://cors-anywhere.herokuapp.com" }) "corsUrl": string;
   @Prop({ default: "en" }) "lang": string;
+  @Prop({ default: "darkcyan" }) "color": string;
   text = "";
   loading = false;
   messages: Message[] = [];
@@ -113,8 +120,6 @@ export default class DialogflowVue extends Vue {
   border-radius: 2rem;
 }
 .message--from-user .message-text {
-  background-color: darkcyan;
-  color: #fff;
   border-bottom-right-radius: 0;
 }
 .message--from-ai .message-text {
