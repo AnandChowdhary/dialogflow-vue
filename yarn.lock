@@ -710,6 +710,11 @@
   dependencies:
     "@types/babel-types" "*"
 
+"@types/dialogflow@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@types/dialogflow/-/dialogflow-0.9.0.tgz#2c97c025a45f316024a43a613fc640c3c5a95e18"
+  integrity sha512-9uOKiK4TruoqcpFZSUzWF7LDzyUfSmR1JXjqjvjZHIMmVwwp7tC35MuMoeGOBPAC2G1C0C5dYa0kHjN8TRhtKg==
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
