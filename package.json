@@ -1,6 +1,6 @@
 {
   "name": "dialogflow-vue",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Vue.js component for embedding a Dialogflow chatbot",
   "main": "dist/dialogflow-vue.ssr.js",
   "module": "dist/dialogflow-vue.esm.js",
