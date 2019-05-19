@@ -1,27 +1,27 @@
 {
   "name": "dialogflow-vue",
   "version": "1.0.0",
-  "description": "",
-
+  "description": "Vue.js component for embedding a Dialogflow chatbot",
   "main": "dist/dialogflow-vue.ssr.js",
   "module": "dist/dialogflow-vue.esm.js",
   "unpkg": "dist/dialogflow-vue.min.js",
-
+  "license": "MIT",
   "files": [
     "dist/*",
     "src/**/*.vue"
   ],
-
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnandChowdhary/dialogflow-vue"    
+  },
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
-
   "dependencies": {
   },
-
   "devDependencies": {
     "cross-env": "^5.2.0",
     "minimist": "^1.2.0",
