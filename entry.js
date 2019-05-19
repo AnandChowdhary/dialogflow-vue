@@ -1,4 +1,4 @@
-import component from "./dialogflow-vue.vue";
+import component from "./src/dialogflow-vue.vue";
 
 function install(Vue) {
   if (install.installed) return;

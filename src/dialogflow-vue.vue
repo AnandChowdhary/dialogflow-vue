@@ -6,6 +6,21 @@ export default {
       counter: 5,
       initCounter: 5
     };
+  },
+  mounted() {
+    console.log("Starting!");
+  },
+  methods: {
+    send() {
+      fetch(`https://dialogflow.googleapis.com/v2/{session=projects/*/agent/sessions/*}:detectIntent`).then(response => {
+        if (!response.ok) throw new Error();
+        return response;
+      }).then(response => response.json()).then(json => {
+        console.log("Got JSON", json);
+      }).catch(error => {
+        console.log("Got error", error);
+      });
+    }
   }
 };
 </script>
