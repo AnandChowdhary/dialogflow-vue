@@ -5,6 +5,7 @@
       :lang="lang"
       :apiKey="apiKey"
       :corsUrl="corsUrl"
+      :googleAnalytics="googleAnalytics"
     />
   </div>
 </template>
@@ -31,11 +32,13 @@ export default class Chat extends Vue {
   lang?: string;
   corsUrl?: string;
   apiKey?: string;
+  googleAnalytics?: string;
   private created() {
     this.color = f(this.$route.query.color);
     this.lang = f(this.$route.query.lang);
     this.corsUrl = f(this.$route.query.corsUrl);
     this.apiKey = f(this.$route.query.apiKey);
+    this.googleAnalytics = f(this.$route.query.googleAnalytics);
   }
 }
 </script>

@@ -29,6 +29,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import snarkdown from "snarkdown";
 import linkifyUrls from "linkify-urls";
+import ua from "universal-analytics";
 
 interface Message {
   id: string;
@@ -36,24 +37,37 @@ interface Message {
   from: string;
   date: Date;
 }
+interface Attrs {
+  [index: string]: string;
+}
 
 @Component
 export default class DialogflowVue extends Vue {
   @Prop({ default: "ee13e89f-05ab-4cda-9f09-4204311c3d80" }) "apiKey": string;
   @Prop({ default: "https://cors-anywhere.herokuapp.com" }) "corsUrl": string;
   @Prop({ default: "en" }) "lang": string;
+  @Prop() "googleAnalytics": string;
   @Prop({ default: "darkcyan" }) "color": string;
+  @Prop({ default: () => {} }) "linkAttributes": Attrs;
   text = "";
+  user?: ua.Visitor;
   loading = false;
   messages: Message[] = [];
-  mounted() {
-    console.log("I am mounted!");
+  private created() {
+    this.user = ua(this.googleAnalytics);
+  }
+  private mounted() {
     this.scroll();
+    if (this.user) this.user.event("dialogflow", "open").send();
   }
   private md(text: string) {
     text = text.replace(/\\n/g, "\n");
     const result = linkifyUrls(text, {
-      attributes: { class: "dialogflow-link" }
+      attributes: {
+        class: "dialogflow-link",
+        target: "_blank",
+        ...this.linkAttributes
+      }
     });
     if (typeof result === "string") text = result;
     return snarkdown(text);
@@ -93,6 +107,7 @@ export default class DialogflowVue extends Vue {
           from: "ai"
         });
         this.$emit("on-response", json.result.fulfillment);
+        if (this.user) this.user.event("dialogflow", "message", this.text, json.result.fulfillment.speech).send();
       })
       .catch(error => {
         this.$emit("on-error", error);
@@ -112,7 +127,7 @@ export default class DialogflowVue extends Vue {
   padding: 1rem;
   list-style: none;
   overflow: auto;
-  height: 500px;
+  min-height: 300px;
 }
 .message {
   display: flex;

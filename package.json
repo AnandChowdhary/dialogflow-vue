@@ -24,10 +24,12 @@
   },
   "dependencies": {
     "linkify-urls": "^3.1.0",
-    "snarkdown": "^1.2.2"
+    "snarkdown": "^1.2.2",
+    "universal-analytics": "^0.4.20"
   },
   "devDependencies": {
     "@types/dialogflow": "^0.9.0",
+    "@types/universal-analytics": "^0.4.2",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-typescript": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
