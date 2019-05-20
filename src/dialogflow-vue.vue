@@ -1,6 +1,13 @@
 <template>
   <div class="dialogflow-vue">
-    <ul class="messages" ref="messages">
+    <div class="title" v-if="title">{{ title }}</div>
+    <div class="messages empty-state" v-if="!messages.length">
+      <div>
+        <h1>{{ heading }}</h1>
+        <p>{{ subheading }}</p>
+      </div>
+    </div>
+    <ul v-else class="messages" ref="messages">
       <li
         :class="`message message--from-${message.from}`"
         v-for="(message, index) in messages"
@@ -14,13 +21,13 @@
           "
           />
       </li>
-      <li class="message message--from-ai" v-if="loading">
-        <span class="message-text">Typing...</span>
+      <li class="message message--from-ai loading" v-if="loading">
+        <span class="message-text">{{ typing }}</span>
       </li>
     </ul>
     <form @submit.prevent="talk">
-      <input type="text" v-model="text" />
-      <button>Send</button>
+      <input placeholder="Type something..." type="text" v-model="text" />
+      <button :style="`background: ${color}; color: #fff`">{{ send }}</button>
     </form>
   </div>
 </template>
@@ -48,6 +55,11 @@ export default class DialogflowVue extends Vue {
   @Prop({ default: "en" }) "lang": string;
   @Prop() "googleAnalytics": string;
   @Prop({ default: "darkcyan" }) "color": string;
+  @Prop({ default: "" }) "title": string;
+  @Prop({ default: "Say hello!" }) "heading": string;
+  @Prop({ default: "Start typing something to get answers" }) "subheading": string;
+  @Prop({ default: "Send" }) "send": string;
+  @Prop({ default: "• • •" }) "typing": string;
   @Prop({ default: () => {} }) "linkAttributes": Attrs;
   text = "";
   user?: ua.Visitor;
@@ -73,9 +85,10 @@ export default class DialogflowVue extends Vue {
     return snarkdown(text);
   }
   private scroll() {
-    (<Element>this.$refs.messages).scrollTo(
+    const m = <Element>this.$refs.messages;
+    if (m) m.scrollTo(
       0,
-      (<Element>this.$refs.messages).scrollHeight
+      m.scrollHeight
     );
   }
   private talk() {
@@ -122,12 +135,30 @@ export default class DialogflowVue extends Vue {
 </script>
 
 <style scoped>
+.dialogflow-vue {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .messages {
   margin: 0;
   padding: 1rem;
   list-style: none;
   overflow: auto;
-  min-height: 300px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+.empty-state {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.loading {
+  color: #aaa;
+}
+h1 {
+  font-weight: 300;
 }
 .message {
   display: flex;
@@ -138,17 +169,48 @@ export default class DialogflowVue extends Vue {
 }
 .message-text {
   display: inline-block;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   margin-bottom: 0.75rem;
   background-color: whitesmoke;
   word-break: break-word;
-  border-radius: 2rem;
+  max-width: 75%;
+  border-radius: 1.25rem;
 }
 .message--from-user .message-text {
   border-bottom-right-radius: 0;
 }
 .message--from-ai .message-text {
   border-bottom-left-radius: 0;
+}
+form {
+  background-color: whitesmoke;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+input {
+  font: inherit;
+  border: 1px solid #ddd;
+  border-radius: 1.25rem;
+  padding: 0.5rem 1rem;
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+button {
+  font: inherit;
+  border: 0;
+  border-radius: 1.25rem;
+  padding: 0.5rem 1rem;
+}
+.title {
+  background-color: whitesmoke;
+  font-size: 110%;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
 }
 </style>
 
