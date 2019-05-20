@@ -13,7 +13,7 @@ export default new Router({
       component: Home
     },
     {
-      path: "/:apiKey",
+      path: "/embed",
       name: "chat",
       component: Chat
     }

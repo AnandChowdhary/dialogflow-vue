@@ -8,11 +8,11 @@
       >
         <span
           class="message-text"
+          v-html="md(message.text)"
           :style="
             message.from === 'user' ? `color: #fff; background: ${color}` : ''
           "
-          >{{ message.text }}</span
-        >
+          />
       </li>
       <li class="message message--from-ai" v-if="loading">
         <span class="message-text">Typing...</span>
@@ -27,6 +27,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import snarkdown from "snarkdown";
+import linkifyUrls from "linkify-urls";
 
 interface Message {
   id: string;
@@ -47,6 +49,14 @@ export default class DialogflowVue extends Vue {
   mounted() {
     console.log("I am mounted!");
     this.scroll();
+  }
+  private md(text: string) {
+    text = text.replace(/\\n/g, "\n");
+    const result = linkifyUrls(text, {
+      attributes: { class: "dialogflow-link" }
+    });
+    if (typeof result === "string") text = result;
+    return snarkdown(text);
   }
   private scroll() {
     (<Element>this.$refs.messages).scrollTo(
@@ -124,5 +134,12 @@ export default class DialogflowVue extends Vue {
 }
 .message--from-ai .message-text {
   border-bottom-left-radius: 0;
+}
+</style>
+
+<style>
+.dialogflow-link {
+  color: inherit;
+  font-weight: bold;
 }
 </style>

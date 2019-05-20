@@ -22,7 +22,10 @@
     "serve": "vue-cli-service serve",
     "build-site": "vue-cli-service build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "linkify-urls": "^3.1.0",
+    "snarkdown": "^1.2.2"
+  },
   "devDependencies": {
     "@types/dialogflow": "^0.9.0",
     "@vue/cli-plugin-babel": "^3.7.0",

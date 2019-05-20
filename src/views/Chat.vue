@@ -35,7 +35,7 @@ export default class Chat extends Vue {
     this.color = f(this.$route.query.color);
     this.lang = f(this.$route.query.lang);
     this.corsUrl = f(this.$route.query.corsUrl);
-    this.apiKey = f(this.$route.params.apiKey);
+    this.apiKey = f(this.$route.query.apiKey);
   }
 }
 </script>
