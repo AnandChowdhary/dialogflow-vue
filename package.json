@@ -31,7 +31,7 @@
     "@types/dialogflow": "^0.9.4",
     "@types/universal-analytics": "^0.4.2",
     "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-typescript": "^3.7.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.7.0",
     "core-js": "^3.1.2",
     "cross-env": "^5.2.0",
